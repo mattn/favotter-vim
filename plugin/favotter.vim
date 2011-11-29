@@ -10,7 +10,7 @@ function! s:ShowFavotter(...)
   endif
   let res = http#get("http://favotter.net/user/".user)
   let res.content = iconv(res.content, 'utf-8', &encoding)
-  let res.content = substitute(res.content, '<\(br\|meta\|link\)\s*>', '<\1/>', 'g')
+  let res.content = substitute(res.content, '<\(br\|meta\|link\|hr\)\s*>', '<\1/>', 'g')
   let res.content = substitute(res.content, '<img\([^>]*\)>', '<img\1/>', 'g')
   let dom = xml#parse(res.content)
   for item in dom.findAll({'class': 'entry xfolkentry hentry  '})
