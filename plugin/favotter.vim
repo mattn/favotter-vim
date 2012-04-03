@@ -8,11 +8,11 @@ function! s:ShowFavotter(...)
     echohl None
     return
   endif
-  let res = http#get("http://favotter.net/user/".user)
+  let res = webapi#http#get("http://favotter.net/user/".user)
   let res.content = iconv(res.content, 'utf-8', &encoding)
   let res.content = substitute(res.content, '<\(br\|meta\|link\|hr\)\s*>', '<\1/>', 'g')
   let res.content = substitute(res.content, '<img\([^>]*\)>', '<img\1/>', 'g')
-  let dom = xml#parse(res.content)
+  let dom = webapi#xml#parse(res.content)
   for item in dom.findAll({'class': 'entry xfolkentry hentry  '})
     let tweet = item.find('span')
     let text = substitute(tweet.value(), "\n", " ", "g")
